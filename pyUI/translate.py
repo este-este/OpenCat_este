@@ -1,5 +1,5 @@
-versionNum = '1.2.0'
-dateStr = '2024-05-30'
+versionNum = '1.2.3'
+dateStr = '2025-01-21'
 
 textEN = {
     'lan':'English',
@@ -15,6 +15,9 @@ textEN = {
     'Task Scheduler':'Task Scheduler',
     'Scheduler':'Scheduler',
     'Firmware Uploader':'Firmware Uploader',
+    'Debugger': 'Debugger',
+    'tipDebugger':'Provide convinient tools to debug the robot.',
+
     'Eye color picker':'Eye color picker',
     'Creator Information':'Creator Information',
     'Creator':'Creator',
@@ -52,6 +55,9 @@ textEN = {
     'Head Pan':'Head Pan',
     'Head Tilt':'Head Tilt',
     'Tail Pan':'Tail Pan',
+    'Claw Pan': 'Claw Pan',
+    'Claw Lift': 'Claw Lift',
+    'Claw Open': 'Claw Open',
     'N/A':'N/A',
     'Left Front':'Left Front',
     'Right Front':'Right Front',
@@ -71,6 +77,17 @@ textEN = {
     'Random':'Random',
     'Send':'Send',
     'Postures':'Preset Postures',
+    'balance': 'stand',
+    'buttUp': 'butt up',
+    'dropped': 'dropped',
+    'lifted': 'lifted',
+    'rest': 'rest',
+    'sit': 'sit',
+    'str': 'stretch',
+    'zero':'zero',
+    'flat':'flat',
+    'table':'table',
+
     'Skill Editor':'Skill Editor',
     'Play':'Play',
     'Pause':'Pause',
@@ -107,8 +124,8 @@ Click the button below. Connect the USB cable to the main board, then plug the o
 * If the main board is already connected to the computer via a USB cable:\n
 1. Confirm your computer can recognize the USB device.\n
 More details can be found at https://docs.petoi.com/upload-firmware\n
-2. After clicking the button below, unplug the USB cable from the COMPUTER side, and then plug it back.
-''',
+2. After clicking the button below, unplug the USB cable from the COMPUTER side, and then plug it back.\n
+The program will automatically identify the correct serial port name.''',
     'Confirm':'Confirm',
     'Counting down to manual mode: ':'Counting down to manual mode: ',
     'Info':'Info',
@@ -117,7 +134,28 @@ More details can be found at https://docs.petoi.com/upload-firmware\n
     '* Port ':'* Port ',
     ' cannot be opened':' cannot be opened',
 
+    'Reset voice module':'Reset voice module',
+    'tipRstVoice':'Click this button to reset the voice module.',
+    'BiBoard Config':'BiBoard Config',
+    'tipbiboardConfig':'Click this button to configure BiBoard.',
+
+    'Voice indicates':'''Do you hear the melody "1-3-5"?\n
+If yes, press the button "Yes" to continue; 
+If no, press the button "No" to quit, for BiBoard V0, please check the dial switch 
+on the bottom of the BiBoard extension hat is dialed to Voice, not UART2.
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'Yes',
+    'No': 'No',
+    'Reset successfully': 'Reset successfully!',
+    'logLocation':'Please check the log file (logfile.log) in the following file path: \n',
+    'checkLogfile':'''\nFor more details, please refer to https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+If you can not fix the issue, please send the log to support@petoi.com for help.''',
+
     'Calibrate':'Calibrate',
+    'Auto':'Auto',
+    'AutoCali failed': '''Automatic calibration of the robotic claw joint servo failed!\n
+    Please follow the instructions in the Petoi Doc Center to perform manual calibration:\n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'Rest',
     'Stand Up':'Stand Up',
     'Walk':'Walk',
@@ -152,8 +190,11 @@ More details can be found at https://docs.petoi.com/upload-firmware\n
  * Mandatory if you just downloaded a new version of this software. 
  * You can select \'N\' to preserve the calibration values. ''',
     'btnUpdateMode': 'Update the Mode Only',
-    'tipUpdateMode':''' If you have upgraded the firmware at least once after a new download, 
- it\'s faster to only switch the modes without refreshing the parameters. ''',
+    'tipUpdateMode':''' For NyBoard:
+ If you have upgraded the firmware at least once after a new download, 
+ it\'s faster to only switch the modes without refreshing the parameters. 
+ For BiBoard:
+ The function of this button is the same as the function of the "Upgrade the Firmware" button.''',
     'Warning': 'Warning',
     'Uploading': 'Uploading ',
     'is successully uploaded':' is successully uploaded',
@@ -170,7 +211,7 @@ More details can be found at https://docs.petoi.com/upload-firmware\n
 
     'msgVersion': 'Version: ' + versionNum + '\n'+
     '''Firmware upload tool for OpenCat
-    Copyright © 2018-2024
+    Copyright © 2018-2025
     All rights reserved Petoi LLC
     https://www.petoi.com\n''' + dateStr,
 
@@ -188,8 +229,9 @@ More details can be found at https://docs.petoi.com/upload-firmware\n
     'IMU calibrated': 'Calibrate IMU complete!',
     'caliIMUerrorStatus':'IMU Calibration Error!',
 
-    'parameterFinish': '''Parameters initialized!
-     The next step is uploading the Main Function!''',
+    'parameterFinish': '''Parameters initialized! \n
+After clicking the "OK" button, the main function firmware will be automatically uploaded.''',
+
     '9685 Calibrated':'PCA9685 has been calibrated successfully!',
     'msgFinish': 'Firmware upload complete!',
     'msgMode': 'Invalide, please select another mode!',
@@ -209,6 +251,7 @@ Then re-upgrade the firmware.\n''',
     'Light':'Light',
     'Gesture':'Gesture',
     'InfraredDistance':'InfraredDistance',
+    'Voice_RobotArm':'Voice_RobotArm',
     
     'Breath':'Breath',
     'Rotate':'Rotate',
@@ -232,7 +275,7 @@ Then re-upgrade the firmware.\n''',
     'tipMirrorXport':'Mirror the whole skill when exporting\n* Effective when exporting the whole skill',
     'tipGorB':'A behavior interpolates between the key frames and excutes only once\nA gait loops over all the frames without any smoothing',
     'tipLoop':'Set the starting and ending frames for looping\n* Effective when exporting the whole skill',
-    'tipRepeat':'Enter the number of loops\n-1 for inifinite loop. Only the \"reset\" button can break the loop!\n* Effective when exporting the whole skill',
+    'tipRepeat':'Enter the number of loops\n-1 for inifinite loop. Only the "reset" button can break the loop!\n* Effective when exporting the whole skill',
     'tipSet':'Jump to/save the current frame',
     'tipStep':'Unit: degree/step\n* Effective when exporting the whole skill',
     'tipDelay':'Unit: milisecond\nDelay after the current frame, before entering the next frame\nIf the trigger is valid, the delay starts after the trigger\n* Effective when exporting the whole skill',
@@ -242,7 +285,7 @@ Then re-upgrade the firmware.\n''',
     'tipAdd':'Copy the active frame and\ninsert it to the next row',
     'tipDel':'Delete the current frame',
     
-    'tipImgWiring':'Pay attention to the location and direction of the servo plugs\nLong-press the battery\'s button to turn on the power\nClick \"Calibrate\" to rotate all the servos to the calibration state\nAttach the legs and head perpendicularly\nUse the slider to align the edges of the legs and the reference ruler parallelly',
+    'tipImgWiring':'Pay attention to the location and direction of the servo plugs\nLong-press the battery\'s button to turn on the power\nClick "Calibrate" to rotate all the servos to the calibration state\nAttach the legs and head perpendicularly\nUse the slider to align the edges of the legs and the reference ruler parallelly',
     'tipImgPosture':'Switch between postures to test the calibration results\nSave the offsets in time\nNo need for calibration in the future',
     'Boot prompt': 'Boot prompt',
     'poweron':'The robot must be powered by a battery to rotate its joints, \n\nIt\'s VITAL for controlling joint movement!\n\nThe yellow LED on the mainboard should light up, \n\notherwise, plug in the battery and long-press its \n\nbutton for 3 seconds to power on the robot.\n\n',
@@ -261,6 +304,9 @@ textCN = {
     'Joint Calibrator':'关节校准',
     'Scheduler':'时序器',
     'Firmware Uploader':'固件上载',
+    'Debugger': '调试器',
+    'tipDebugger':'提供便捷的机器人调试工具。',
+    'tipRstVoice':'点击此按钮重置语音模块。',
     'Eye color picker':'眼色选择器',
     'Creator Information':'创作者信息',
     'Creator':'创作者',
@@ -298,6 +344,9 @@ textCN = {
     'Head Pan':'头部平转',
     'Head Tilt':'头部俯仰',
     'Tail Pan':'尾巴平转',
+    'Claw Pan': '爪旋转',
+    'Claw Lift': '爪升降',
+    'Claw Open': '爪开合',
     'N/A':'闲置',
     'Left Front':'左前',
     'Right Front':'右前',
@@ -318,6 +367,17 @@ textCN = {
     'Random':'随机行为',
     'Send':'发送',
     'Postures':'预设姿态',
+    'balance': '站立',
+    'buttUp': '撅屁股',
+    'dropped': '下落',
+    'lifted': '举手',
+    'rest': '休息',
+    'sit': '坐下',
+    'str': '伸懒腰',
+    'zero':'零位',
+    'flat':'平铺',
+    'table':'桌子',
+    
     'Skill Editor':'技能编辑器',
     'Play':'播放',
     'Import':'导入',
@@ -343,11 +403,15 @@ textCN = {
     'Clear':'清空',
     'max':'最快',
     'Calibrate':'校准位',
+    'Auto':'自动',
+    'AutoCali failed': '''自动校准机械爪关节舵机失败！\n
+    请按照说明书中的方法，进行手动校准：\n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'休息',
     'Stand Up':'站立',
     'Walk':'行走',
     'Abort':'放弃',
-    "Refresh":"刷新",
+    'Refresh':'刷新',
 
     'Manual mode':'手动模式',
     'Replug mode':'重新拔插',
@@ -358,8 +422,8 @@ textCN = {
 * 如果主板已经通过USB数据线连接到计算机：\n
 1. 确认您的计算机可以识别 USB 设备。\n
    更多详情请参考 https://docs.petoi.com/upload-firmware \n
-2. 点击下面的按钮后，从电脑端拔下USB数据线，然后再插回去。
-''',
+2. 点击下面的按钮后，从电脑端拔下USB数据线，然后再插回去。\n
+   程序将自动识别出正确的串口名称。''',
     'Confirm':'确认',
     'Counting down to manual mode: ':'切换到手动模式倒计时：',
     'Info':'提示',
@@ -367,6 +431,18 @@ textCN = {
     'Please select the port from the list':'请从列表中选择串口名称',
     '* Port ':'* 端口 ',
     ' cannot be opened':' 无法打开',
+
+    'Reset voice module':'重置语音模块',
+    'Voice indicates':'''您能听到“1-3-5”的旋律吗？
+是的话，请按“是”按钮继续；
+否的话，请按“否”按钮退出，对于BiBoard V0主板，请检查 BiBoard 扩展底部的拨动开关是否拨到“语音”，而不是“UART2”。
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': '是',
+    'No': '否',
+    'Reset successfully': '重置成功！',
+    'logLocation':'请在以下文件路径中检查日志文件 (logfile.log) ：\n',
+    'checkLogfile':'''\n相关详细信息，请参阅 https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+如果您无法解决问题，请发送日志到 support@petoi.com 以寻求帮助。''',
 
     'Do you want to save the offsets?':'要保存校准值吗？',
     'Need to manually select the model type (Nybble/Bittle)':'请手动选择型号(Nybble/Bittle)',
@@ -387,7 +463,7 @@ textCN = {
     'labBoardVersion': '主板型号',
     'labProduct': '产品',
     'labMode': '模式',
-    'Warning': "警告",
+    'Warning': '警告',
     'msgFileDir': '请选择release文件夹！',
     'msgPort': '请选择正确的串口！',
 
@@ -402,7 +478,7 @@ textCN = {
 
     'msgVersion': '版本：' + versionNum + '\n'+
     '''OpenCat固件上传工具
-    版权所有 © 2018-2024
+    版权所有 © 2018-2025
     派拓艺（深圳）科技有限责任公司
     https://www.petoi.com\n''' + dateStr,
 
@@ -420,8 +496,8 @@ textCN = {
     'IMU calibrated': 'IMU校准完成！',
     'caliIMUerrorStatus':'IMU 校准错误！',
             
-    'parameterFinish': '''参数初始化完成！
-                       接下来将开始上传主程序！''',
+    'parameterFinish': '''参数初始化完成！\n
+点击“确定”按钮后，将自动上传主功能固件。''',
     '9685 Calibrated':'PCA9685校准完成！',
     'msgFinish': '固件上传完成！',
     'msgMode': '无效模式，请选择其他模式！',
@@ -441,6 +517,7 @@ https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
     'Light':'光敏',
     'Gesture':'手势',
     'InfraredDistance':'红外测距',
+    'Voice_RobotArm':'语音_机械臂',
     'Parameters':'参数',
     'Main function':'主程序',
     'Time consuming': '大约需要30秒',
@@ -448,12 +525,15 @@ https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
     'tipFacReset':''' 恢复出厂设置后，你需要重新校准关节舵机，请参考：
  https://docs.petoi.com/joint-calibration ''',
     'btnUpgrade':'升级固件',
-    'tipUpgrade':''' 升级参数固件和主程序固件。
+    'tipUpgrade':''' 升级参数和主程序固件。
  * 如果您初次下载了该软件的新版本，则必须点击此按钮升级固件。
  * 您可以选择 “N” 来保留校准值。''',
     'btnUpdateMode': '只更新模式',
-    'tipUpdateMode':''' 如果您在下载后至少升级过一次固件，
- 只切换模式而不刷新参数固件会更快。''',
+    'tipUpdateMode':''' 对于NyBoard:
+ 如果您在下载后至少升级过一次固件，
+ 只切换模式而不刷新参数固件会更快。
+ 对于BiBoard：
+ 此按钮的功能与“升级固件”按钮的功能相同。''',
     'Breath':'渐变',
     'Rotate':'旋转',
     'Flash':'闪烁',
@@ -503,7 +583,10 @@ textCN_TW = {
     'Utility':'應用工具',
     'Joint Calibrator':'關節校準',
     'Scheduler':'排程器',
-    'Firmware Uploader':'固件上傳',
+    'Firmware Uploader':'韌體上傳',
+    'Debugger': '調試器',
+    'tipDebugger':'提供便捷的機器人除錯工具。',
+    'tipRstVoice':'點擊此按鈕重設語音模組。',
     'Eye color picker':'眼睛顏色選擇器',
     'Creator Information':'創作者信息',
     'Creator':'創作者',
@@ -541,6 +624,9 @@ textCN_TW = {
     'Head Pan':'頭部平轉',
     'Head Tilt':'頭部俯仰',
     'Tail Pan':'尾巴平轉',
+	'Claw Pan': '爪旋轉',
+    'Claw Lift': '爪升降',
+    'Claw Open': '爪開合',
     'N/A':'閒置',
     'Left Front':'左前',
     'Right Front':'右前',
@@ -561,6 +647,17 @@ textCN_TW = {
     'Random':'随機行為',
     'Send':'發送',
     'Postures':'預設姿態',
+    'balance': '站立',
+    'buttUp': '撅屁股',
+    'dropped': '下落',
+    'lifted': '舉手',
+    'rest': '休息',
+    'sit': '坐下',
+    'str': '伸懶腰',
+    'zero':'零位',
+    'flat':'平鋪',
+    'table':'桌子',
+
     'Skill Editor':'技能编輯器',
     'Play':'播放',
     'Import':'導入',
@@ -586,6 +683,10 @@ textCN_TW = {
     'Clear':'清空',
     'max':'最快',
     'Calibrate':'校準位',
+    'Auto':'自動',
+    'AutoCali failed': '''自動校準機械爪關節舵機失敗！\n
+    請按照說明書中的方法，進行手動校準：\n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'休息',
     'Stand Up':'站立',
     'Walk':'行走',
@@ -601,8 +702,8 @@ textCN_TW = {
 * 如果主機板已經通過USB資料線連接到電腦：\n
 1. 確認您的電腦可以識別 USB 設備。\n
    更多詳情請參考 https://docs.petoi.com/upload-firmware \n
-2. 點擊下面的按鈕後，從電腦端拔下USB資料線，然後再插回去。
-''',
+2. 點擊下面的按鈕後，從電腦端拔下USB資料線，然後再插回去。\n
+   程式將自動辨識出正確的序列埠名稱。''',
     'Confirm':'確認',
     'Counting down to manual mode: ':'切換到手動模式倒計時：',
     'Info':'提示',
@@ -610,6 +711,18 @@ textCN_TW = {
     'Please select the port from the list':'請從列表中選擇串口名稱',
     '* Port ':'* 埠 ',
     ' cannot be opened':' 無法打開',
+
+    'Reset voice module':'重設語音模組',
+    'Voice indicates':'''您能聽到「1-3-5」的旋律嗎？
+是的話，請按「是」按鈕繼續；
+否的話，請按「否」按鈕退出，對於BiBoard V0，請檢查 BiBoard 擴展板底部的撥動開關是否撥到「語音」，而不是「UART2」。
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': '是',
+    'No': '否',
+    'Reset successfully': '重設成功！',
+    'logLocation':'請在以下檔案路徑中檢查日誌檔案 (logfile.log)： \n',
+    'checkLogfile':'''\n相關详细信息，請參閱 https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+如果您無法修復問題，請將日志發送到 support@petoi.com 以尋求幫助。''',
 
     'Do you want to save the offsets?':'要保存校準值嗎？',
     'Need to manually select the model type (Nybble/Bittle)':'請手動選擇型號(Nybble/Bittle)',
@@ -643,8 +756,8 @@ textCN_TW = {
     'titleVersion': '版本信息',
 
     'msgVersion': '版本：' + versionNum + '\n'+
-    '''OpenCat固件上傳工具
-    版權所有 © 2018-2024
+    '''OpenCat韌體上傳工具
+    版權所有 © 2018-2025
     派拓藝（深圳）科技有限责任公司
     https://www.petoi.com\n''' + dateStr,
 
@@ -662,10 +775,10 @@ textCN_TW = {
     'IMU calibrated': 'IMU校準完成！',
     'caliIMUerrorStatus':'IMU 校正錯誤！',
             
-    'parameterFinish': '''參數初始化完成！
-                       接下來將開始上傳主程序！''',
+    'parameterFinish': '''參數初始化完成！\n
+點擊「確定」按鈕後，主功能韌體將自動上傳。''',
     '9685 Calibrated':'PCA9685校準完成！',
-    'msgFinish': '固件上傳完成!',
+    'msgFinish': '韌體上傳完成!',
     'msgMode': '無效模式，請選擇其他模式!',
     'caliIMUerrorMessage': '''請將 I2C 開關撥到 Arduino 側。有关更多详细信息，請參閱:\n
 https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
@@ -683,19 +796,24 @@ https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
     'Light':'光敏',
     'Gesture':'手勢',
     'InfraredDistance':'紅外線測距',
+    'Voice_RobotArm':'語音_機械臂',
     'Parameters':'參數',
     'Main function':'主程序',
     'Time consuming': '大約需要30秒',
     'btnFacReset':'恢復出廠設置',
     'tipFacReset':''' 恢復出廠設置後，你需要重新校準關節舵機，請參考：
  https://docs.petoi.com/joint-calibration ''',
-    'btnUpgrade':'升級固件',
-    'tipUpgrade':''' 升級參數固件和主程序固件。
- * 如果您初次下載了該軟體的新版本，則必須點擊此按鈕升級固件。
+    'btnUpgrade':'升級韌體',
+    'tipUpgrade':''' 升級參數和主程式韌體。
+ * 如果您初次下載了該軟體的新版本，則必須點擊此按鈕升級韌體。
  * 您可以選擇 “N” 來保留校準值。''',
     'btnUpdateMode': '僅更新模式',
-    'tipUpdateMode':''' 如果您在下載後至少升級過一次固件，
- 僅切換模式而不刷新參數固件會更快。''',
+    'tipUpdateMode':''' 對於NyBoard:
+ 如果您在下載後至少升級過一次韌體，
+ 僅切換模式而不刷新參數韌體會更快。
+ 對於BiBoard：
+ 此按鈕的功能與「升級韌體」按鈕的功能相同。
+ ''',
     'Breath':'漸變',
     'Rotate':'旋轉',
     'Flash':'閃爍',
@@ -748,6 +866,9 @@ textDE = {
     'Task Scheduler':'Aufgabenplaner',
     'Scheduler':'Planer',
     'Firmware Uploader':'Firmware-Uploader',
+    'Debugger': 'Debugger',
+    'tipDebugger':'Bequeme Werkzeuge zur Fehlerbehebung des Roboters bereitstellen.',
+    'tipRstVoice':'Klicken Sie auf diese Schaltfläche, um das Sprachmodul zurückzusetzen.',
     'Eye color picker':'Augenfarbauswahl',
     'Creator Information':'Erstellerinformationen',
     'Creator':'Schöpfer',
@@ -785,6 +906,9 @@ textDE = {
     'Head Pan':'Kopf-Pan',
     'Head Tilt':'Kopf-Neigung',
     'Tail Pan':'Schwanz-Pan',
+    'Claw Pan': 'Greifer drehen',
+    'Claw Lift': 'Greifer heben',
+    'Claw Open': 'Greifer öffnen',
     'N/A':'N/V',
     'Left Front':'Links vorne',
     'Right Front':'Rechts vorne',
@@ -804,6 +928,17 @@ textDE = {
     'Random':'Zufällig',
     'Send':'Schicken',
     'Postures':'Voreingestellte Haltungen',
+    'balance': 'Ständer',
+    'buttUp': 'Gesäß hochheben',
+    'dropped': 'gefallen',
+    'lifted': 'gehoben',
+    'rest': 'liegen',
+    'sit': 'sitzen',
+    'str': 'sich strecken',
+    'zero':'Neutralhaltung',
+    'flat':'flach liegend',
+    'table':'Tisch',
+
     'Skill Editor':'Skill-Editor',
     'Play':'Abspielen',
     'Pause':'Pausieren',
@@ -840,8 +975,8 @@ Klicken Sie auf die Schaltfläche unten. Verbinden Sie das USB-Kabel mit der Hau
 * Wenn die Hauptplatine bereits über ein USB-Kabel mit dem Computer verbunden ist:\n
 1. Vergewissern Sie sich, dass Ihr Computer das USB-Gerät erkennen kann.\n
 Weitere Einzelheiten finden Sie unter https://docs.petoi.com/upload-firmware.\n
-2. Nachdem Sie auf die Schaltfläche unten geklickt haben, ziehen Sie das USB-Kabel von der COMPUTER-Seite ab und stecken Sie es dann wieder ein. 
-''',
+2. Nachdem Sie auf die Schaltfläche unten geklickt haben, ziehen Sie das USB-Kabel von der COMPUTER-Seite ab und stecken Sie es dann wieder ein.\n
+Das Programm wird den richtigen seriellen Portnamen automatisch erkennen.''',
     'Confirm':'Bestätigen',
     'Counting down to manual mode: ':'Countdown zum manuellen Modus: ',
     'Info':'Information',
@@ -850,7 +985,24 @@ Weitere Einzelheiten finden Sie unter https://docs.petoi.com/upload-firmware.\n
     '* Port ':'* Hafen ',
     ' cannot be opened':' Kann nicht geöffnet werden',
 
+    'Reset voice module':'Sprachmodul zurücksetzen',
+    'Voice indicates':'''Hören Sie die Melodie "1-3-5"?
+Wenn ja, drücken Sie die Taste "Ja", um fortzufahren.
+Wenn nicht, drücken Sie die Schaltfläche "Nein" zum Beenden. Überprüfen Sie bei BiBoard V0, 
+ob der DIP-Schalter an der Unterseite der BiBoard-Erweiterung auf Voice und nicht auf UART2 eingestellt ist.
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'Ja',
+    'No': 'Nein',
+    'Reset successfully': 'Reset erfolgreich!',
+    'logLocation':'Bitte überprüfen Sie die Log-Datei (logfile.log) im folgenden Dateipfad: \n',
+    'checkLogfile':'''\nWeitere Einzelheiten finden Sie unter https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+Wenn Sie das Problem nicht beheben können, senden Sie das Protokoll bitte zur Hilfe an support@petoi.com.''',
+
     'Calibrate':'Kalibrieren',
+    'Auto':'Auto',
+    'AutoCali failed': '''Die automatische Kalibrierung des Servomotors für das Gelenk des Robotergreifers ist fehlgeschlagen!\n
+    Bitte folgen Sie den Anweisungen in der Bedienungsanleitung, um eine manuelle Kalibrierung durchzuführen: \n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'Ruhe',
     'Stand Up':'Aufstehen',
     'Walk':'Gehen',
@@ -881,12 +1033,15 @@ Weitere Einzelheiten finden Sie unter https://docs.petoi.com/upload-firmware.\n
     'tipFacReset':''' Nach dem Zurücksetzen auf die Werkseinstellungen müssen Sie eine gemeinsame Kalibrierung durchführen. 
  Weitere Informationen finden Sie unter: https://docs.petoi.com/joint-calibration ''',
     'btnUpgrade':'Aktualisieren Sie die Firmware',
-    'tipUpgrade':''' Aktualisieren Sie sowohl die Parameter als auch die Hauptfunktion. 
+    'tipUpgrade':''' Aktualisieren Sie die Parameter und die Firmware des Hauptprogramms. 
  * Obligatorisch, wenn Sie gerade eine neue Version dieser Software heruntergeladen haben. 
- * Sie können „N“ wählen, um die Kalibrierungswerte beizubehalten. ''',
+ * Sie können "N" wählen, um die Kalibrierungswerte beizubehalten. ''',
     'btnUpdateMode': 'Aktualisieren Sie nur den Modus',
-    'tipUpdateMode':''' Wenn Sie die Firmware nach einem erneuten Download mindestens einmal aktualisiert haben, 
- Es ist schneller, nur die Modi zu wechseln, ohne die Parameter zu aktualisieren. ''',
+    'tipUpdateMode':''' Für NyBoard:
+ Wenn Sie die Firmware nach einem erneuten Download mindestens einmal aktualisiert haben, 
+ Es ist schneller, nur die Modi zu wechseln, ohne die Parameter zu aktualisieren. 
+ Für BiBoard: 
+ Die Funktion dieser Taste ist dieselbe wie die Funktion der Taste "Aktualisieren Sie die Firmware".''',
     'Warning': 'Warnung',
     'Uploading': 'Hochladen ',
     'is successully uploaded':' erfolgreich hochgeladen',
@@ -903,7 +1058,7 @@ Weitere Einzelheiten finden Sie unter https://docs.petoi.com/upload-firmware.\n
 
     'msgVersion': 'Version: ' + versionNum + '\n'+
     '''Firmware-Uploader für OpenCat
-    Copyright © 2018-2024
+    Copyright © 2018-2025
     Alle Rechte vorbehalten
     Petoi LLC
     https://www.petoi.com\n''' + dateStr,
@@ -922,8 +1077,8 @@ Weitere Einzelheiten finden Sie unter https://docs.petoi.com/upload-firmware.\n
     'IMU calibrated': 'IMU erfolgreich kalibriert!',
     'caliIMUerrorStatus':'IMU-Kalibrierungsfehler!',
 
-    'parameterFinish': '''Parameter initialisiert!
-    Der nächste Schritt ist das Hochladen der Hauptfunktion!''',
+    'parameterFinish': '''Parameter initialisiert! \n
+Nach Klicken auf den "OK"-Button wird die Hauptfunktionsfirmware automatisch hochgeladen.''',
     '9685 Calibrated':'PCA9685 wurde erfolgreich kalibriert!',
     'msgFinish': 'Firmware-Hochladen abgeschlossen!',
     'msgMode': 'Ungültig, bitte wählen Sie einen anderen Modus!',
@@ -943,6 +1098,7 @@ Aktualisieren Sie dann die Firmware erneut.\n''',
     'Light':'Licht',
     'Gesture':'Geste',
     'InfraredDistance':'Infrarot-Entfernung',
+    'Voice_RobotArm':'Sprachmodus_Roboterarm',
 
     'Breath':'Atmen',
     'Rotate':'Drehen',
@@ -996,6 +1152,9 @@ textTH = {
     'Task Scheduler':'ตัวจัดตารางงาน',
     'Scheduler':'ตัวจัดตาราง',
     'Firmware Uploader':'ตัวอัปโหลดเฟิร์มแวร์',
+    'Debugger': 'ดีบักเกอร์ ',
+    'tipDebugger':'จัดเตรียมเครื่องมือที่สะดวกสำหรับดีบักหุ่นยนต์ .',
+    'tipRstVoice':'กดปุ่มนี้เพื่อรีเซ็ตโมดูลเสียง (กดปุ่มนี้เพื่อรีเซ็ตโมดูลเสียง.',
     'Eye color picker':'ตัวเลือกสีตา',
     'Creator Information':'ข้อมูลผู้สร้าง',
     'Creator':'ผู้สร้าง',
@@ -1033,6 +1192,9 @@ textTH = {
     'Head Pan':'หมุนศีรษะ',
     'Head Tilt':'เอียงศีรษะ',
     'Tail Pan':'หมุนหาง',
+    'Claw Pan': 'หมุนกรงเล็บ',
+    'Claw Lift': 'ยกกรงเล็บ',
+    'Claw Open': 'เปิดกรงเล็บ',
     'N/A':'N/A',
     'Left Front':'ด้านหน้าซ้าย',
     'Right Front':'ด้านหน้าขวา',
@@ -1052,6 +1214,17 @@ textTH = {
     'Random':'สุ่ม',
     'Send':'ส่ง',
     'Postures':'ท่าทางที่ตั้งค่าไว้',
+    'balance': 'ขาตั้ง',
+    'buttUp': 'ยกสะโพกขึ้น',
+    'dropped': 'หล่น',
+    'lifted': 'ยก',
+    'rest': 'นอน',
+    'sit': 'นั่ง',
+    'str': 'ยืด',
+    'zero':'ท่าทางปกติ',
+    'flat':'ราบ',
+    'table':'โต๊ะ',
+
     'Skill Editor':'ตัวแก้ไขสกิล',
     'Play':'เล่น',
     'Pause':'หยุดชั่วคราว',
@@ -1063,7 +1236,7 @@ textTH = {
     'Open File':'เปิดไฟล์',
     'Cancel':'ยกเลิก',
     'OK':'ตกลง',
-    'Refresh':"รีเฟรช",
+    'Refresh':'รีเฟรช',
     'Multiple':'หลายตัว',
     'Skill List':'รายการสกิล',
     'Type of skill':'ประเภทของสกิล',
@@ -1087,9 +1260,9 @@ textTH = {
 คลิกปุ่มด้านล่าง ต่อสาย USB เข้ากับเมนบอร์ด จากนั้นเสียบปลายอีกด้านเข้ากับคอมพิวเตอร์ \n\n
 * หากเมนบอร์ดเชื่อมต่อกับคอมพิวเตอร์ผ่านสาย USB อยู่แล้ว:\n
 1. ยืนยันว่าคอมพิวเตอร์ของคุณสามารถรู้จักอุปกรณ์ USB ได้\n
-ดูรายละเอียดเพิ่มเติมได้ที่ https://docs.petoi.com/upload-firmware.\n
-2. หลังจากคลิกปุ่มด้านล่าง ให้ถอดสาย USB จากฝั่งคอมพิวเตอร์ แล้วเสียบกลับเข้าไปใหม่
-''',
+ดูรายละเอียดเพิ่มเติมได้ที่ https://docs.petoi.com/upload-firmware \n
+2. หลังจากคลิกปุ่มด้านล่าง ให้ถอดสาย USB จากฝั่งคอมพิวเตอร์ แล้วเสียบกลับเข้าไปใหม่ \n
+โปรแกรมจะระบุชื่อพอร์ตสื่อสารที่ถูกต้องโดยอัตโนมัติ ''',
     'Confirm':'ยืนยัน',
     'Counting down to manual mode: ':'นับถอยหลังสู่โหมดแมนนวล: ',
     'Info':'ข้อมูล',
@@ -1098,7 +1271,23 @@ textTH = {
     '* Port ':'* ท่าเรือ ',
     ' cannot be opened':' ไม่สามารถเปิดได้',
 
+    'Reset voice module':'รีเซ็ตโมดูลเสียง',
+    'Voice indicates':'''คุณได้ยินท่วงทำนอง "1-3-5" หรือไม่?
+ใช่: กดปุ่ม "ใช่" เพื่อดำเนินการต่อ
+ถ้าไม่มี ให้กดปุ่ม "ไม่" เพื่อออก สำหรับ BiBoard V0 โปรดตรวจสอบสวิตช์แบบหมุนที่ด้านล่างของส่วนขยาย BiBoard ว่าหมุนไปที่ Voice ไม่ใช่ UART2
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'ใช่',
+    'No': 'ไม่ใช่',
+    'Reset successfully': 'รีเซ็ตสำเร็จ!',
+    'logLocation':'โปรดตรวจสอบไฟล์บันทึก (logfile.log) ในเส้นทางไฟล์ต่อไปนี้: \n',
+    'checkLogfile':'''\nสำหรับรายละเอียดเพิ่มเติม โปรดดูที่ https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+หากคุณไม่สามารถแก้ไขปัญหาได้ โปรดส่งไฟล์บันทึกไปยัง support@petoi.com เพื่อขอความช่วยเหลือ''',
+
     'Calibrate':'ปรับสอดคล้อง',
+    'Auto':'อัตโนมัติ',
+    'AutoCali failed': '''การสอบเทียบเซอร์โวมอเตอร์ข้อต่อของกรงเล็บหุ่นยนต์โดยอัตโนมัติล้มเหลว!\n
+    กรุณาปฏิบัติตามคำแนะนำในคู่มือเพื่อทำการสอบเทียบด้วยตนเอง: \n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'พัก',
     'Stand Up':'ยืนขึ้น',
     'Walk':'เดิน',
@@ -1129,12 +1318,16 @@ textTH = {
     'tipFacReset':''' หลังจากการรีเซ็ตเป็นค่าเริ่มต้นจากโรงงาน คุณต้องทำการปรับเทียบร่วม โปรดดูที่: 
  https://docs.petoi.com/joint-calibration ''',
     'btnUpgrade':'อัพเกรดเฟิร์มแวร์',
-    'tipUpgrade':''' อัปเกรดทั้งพารามิเตอร์และฟังก์ชันหลัก 
+    'tipUpgrade':''' อัปเกรดพารามิเตอร์และเฟิร์มแวร์โปรแกรมหลัก
  * จำเป็นหากคุณเพิ่งดาวน์โหลดเวอร์ชันใหม่ของซอฟต์แวร์นี้ 
- * คุณสามารถเลือก 'N' เพื่อรักษาค่าการสอบเทียบ ''',
+ * คุณสามารถเลือก "N" เพื่อรักษาค่าการสอบเทียบ ''',
     'btnUpdateMode': 'อัปเดตโหมดเท่านั้น',
-    'tipUpdateMode':''' หากคุณได้อัปเกรดเฟิร์มแวร์อย่างน้อยหนึ่งครั้งหลังจากดาวน์โหลดใหม่ 
- การสลับโหมดเพียงอย่างเดียวโดยไม่รีเฟรชพารามิเตอร์จะเร็วกว่า ''',
+    'tipUpdateMode':''' สำหรับ NyBoard:
+ หากคุณได้อัปเกรดเฟิร์มแวร์อย่างน้อยหนึ่งครั้งหลังจากดาวน์โหลดใหม่ 
+ การสลับโหมดเพียงอย่างเดียวโดยไม่รีเฟรชพารามิเตอร์จะเร็วกว่า 
+ สำหรับ BiBoard: 
+ ฟังก์ชันของปุ่มนี้เหมือนกับฟังก์ชันของปุ่ม "อัปเกรดเฟิร์มแวร์"
+ ''',
     'Warning': 'คำเตือน',
     'Uploading': 'กำลังอัพโหลด',
     'is successully uploaded':' อัพโหลดสำเร็จ',
@@ -1151,7 +1344,7 @@ textTH = {
 
     'msgVersion': 'เวอร์ชัน: ' + versionNum + '\n'+
     '''เครื่องมืออัพโหลดเฟิร์มแวร์สำหรับ OpenCat
-    ลิขสิทธิ์ ©  2018-2024
+    ลิขสิทธิ์ ©  2018-2025
     สงวนลิขสิทธิ์ทั้งหมด Petoi LLC
     https://www.petoi.com\n''' + dateStr,
 
@@ -1169,8 +1362,8 @@ textTH = {
     'IMU calibrated': 'ปรับแต่ง IMU เสร็จสมบูรณ์!',
     'caliIMUerrorStatus':'ข้อผิดพลาดในการ калиเบรท IMU!',
 
-    'parameterFinish': '''ตั้งค่าพารามิเตอร์เสร็จแล้ว!
-     ขั้นตอนถัดไปคือการโหลดฟังก์ชันหลัก!''',
+    'parameterFinish': '''ตั้งค่าพารามิเตอร์เสร็จแล้ว! \n
+หลังจากคลิกปุ่ม "ตกลง" แล้ว เฟิร์มแวร์ฟังก์ชันหลักจะถูกอัปโหลดโดยอัตโนมัติ ''',
     '9685 Calibrated':'PCA9685 ได้รับการปรับเทียบเรียบร้อยแล้ว!',
     'msgFinish': 'การโหลดเฟิร์มแวร์เสร็จสมบูรณ์!',
     'msgMode': 'ไม่ถูกต้อง โปรดเลือกโหมดอื่น!',
@@ -1190,6 +1383,7 @@ https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
     'Light':'แสง',
     'Gesture':'ท่าทาง',
     'InfraredDistance':'ระยะทางอินฟราเรด',
+    'Voice_RobotArm':'เสียง_แขนหุ่นยนต์',
 
     'Breath':'หายใจ',
     'Rotate':'หมุน',
@@ -1244,6 +1438,9 @@ textFR={
     'Task Scheduler':'Planificateur de tâches',
     'Scheduler':'Planificateur',
     'Firmware Uploader':'Chargeur de firmware',
+    'Debugger': 'Débogueur',
+    'tipDebugger':'Fournir des outils pratiques pour déboguer le robot.',
+    'tipRstVoice':'Cliquez sur ce bouton pour réinitialiser le module vocal.',
     'Eye color picker':'Sélecteur de couleur des yeux',
     'Creator Information':'Informations sur le créateur',
     'Creator':'Créateur',
@@ -1281,6 +1478,9 @@ textFR={
     'Head Pan':'Rotation de la tête',
     'Head Tilt':'Inclinaison de la tête',
     'Tail Pan':'Rotation de la queue',
+    'Claw Pan': 'Faire tourner la pince',
+    'Claw Lift': 'Lever la pince',
+    'Claw Open': 'Ouvrir la pince',
     'N/A':'N/A',
     'Left Front':'Avant gauche',
     'Right Front':'Avant droit',
@@ -1300,6 +1500,17 @@ textFR={
     'Random':'Aléatoire',
     'Send':'Envoyer',
     'Postures':'Postures prédéfinies',
+    'balance': 'Support',
+    'buttUp': 'Soulever les fesses',
+    'dropped': 'tombé',
+    'lifted': 'soulevé',
+    'rest': 'se reposer',
+    'sit': 's\'asseoir',
+    'str': 's\'étirer',
+    'zero':'Position neutre',
+    'flat':'à plat ventre',
+    'table':'Table',
+
     'Skill Editor':'Éditeur de compétences',
     'Play':'Lecture',
     'Pause':'Pause',
@@ -1331,13 +1542,13 @@ textFR={
     'Replug mode':'Mode Replug',
     # 'Replug prompt':'''ATTENTION: Echec de la connexion! \n\n
     'Replug prompt':'''ATTENTION: \n\n
-* Si la carte principale N'EST PAS connectée à l'ordinateur :\n
-Cliquez sur le bouton ci-dessous. Connectez le câble USB à la carte principale, puis branchez l'autre extrémité sur l'ORDINATEUR. \n\n
-* Si la carte principale est déjà connectée à l'ordinateur via un câble USB :\n
+* Si la carte principale N'EST PAS connectée à l\'ordinateur :\n
+Cliquez sur le bouton ci-dessous. Connectez le câble USB à la carte principale, puis branchez l\'autre extrémité sur l\'ORDINATEUR. \n\n
+* Si la carte principale est déjà connectée à l\'ordinateur via un câble USB :\n
 1. Confirmez que votre ordinateur peut reconnaître le périphérique USB.\n
-Vous trouverez plus de détails à l'adresse https://docs.petoi.com/upload-firmware. \n
-2. Après avoir cliqué sur le bouton ci-dessous, débranchez le câble USB du côté de l'ORDINATEUR, puis rebranchez-le.
-''',
+Vous trouverez plus de détails à l\'adresse https://docs.petoi.com/upload-firmware. \n
+2. Après avoir cliqué sur le bouton ci-dessous, débranchez le câble USB du côté de l\'ORDINATEUR, puis rebranchez-le.\n
+Le programme identifiera automatiquement le nom correct du port série.''',
     'Confirm':'Confirmer',
     'Counting down to manual mode: ':'Compte à rebours jusqu\'au mode manuel : ',
     'Info':'Info',
@@ -1345,8 +1556,25 @@ Vous trouverez plus de détails à l'adresse https://docs.petoi.com/upload-firmw
     'Please select the port from the list':'Veuillez sélectionner le port dans la liste',
     '* Port ':'* Port ',
     ' cannot be opened':' ne peut pas être ouvert',
+
+    'Reset voice module':'Réinitialiser le module vocal',
+    'Voice indicates':'''Entendez-vous la mélodie "1-3-5" ?
+Si oui, appuyez sur le bouton "Oui" pour continuer.
+Si non, appuyez sur le bouton "Non" pour quitter. Pour BiBoard V0, veuillez vérifier que le 
+commutateur DIP situé sous la carte d\'extension BiBoard est réglé sur Voice et non sur UART2.
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'Oui',
+    'No': 'Non',
+    'Reset successfully': 'Réinitialisation réussie !',
+    'logLocation':'Veuillez vérifier le fichier journal (logfile.log) dans le chemin de fichier suivant : \n',
+    'checkLogfile':'''\nPour plus de détails, veuillez consulter https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+Si vous ne parvenez pas à résoudre le problème, veuillez envoyer le journal à support@petoi.com pour obtenir de l\'aide.''',
     
     'Calibrate':'Calibrer',
+    'Auto':'Automatique',
+    'AutoCali failed': '''L\'étalonnage automatique du servomoteur de l\'articulation de la pince robotique a échoué !\n
+    Veuillez suivre les instructions du manuel pour effectuer un étalonnage manuel: \n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'Repos',
     'Stand Up':'Se lever',
     'Walk':'Marcher',
@@ -1374,15 +1602,18 @@ Vous trouverez plus de détails à l'adresse https://docs.petoi.com/upload-firmw
     'Main function':'Fonction principale',
     'Time consuming': 'cela prendra environ 30 secondes',
     'btnFacReset':'Réinitialisation d\'usine',
-    'tipFacReset':''' Après la réinitialisation d'usine, vous devrez effectuer l'étalonnage des articulations. Veuillez vous référer à :
+    'tipFacReset':''' Après la réinitialisation d\'usine, vous devrez effectuer l\'étalonnage des articulations. Veuillez vous référer à :
      https://docs.petoi.com/joint-calibration ''',
     'btnUpgrade':'Mettre à jour le micrologiciel',
-    'tipUpgrade':''' Met à jour à la fois les paramètres et la fonction principale.
+    'tipUpgrade':''' Mettre à niveau les paramètres et le firmware du programme principal.
      * Obligatoire si vous venez de télécharger une nouvelle version de ce logiciel.
-     * Vous pouvez sélectionner 'N' pour conserver les valeurs d'étalonnage. ''',
+     * Vous pouvez sélectionner "N" pour conserver les valeurs d\'étalonnage. ''',
     'btnUpdateMode': 'Mettre à jour uniquement le mode',
-    'tipUpdateMode':''' Si vous avez déjà mis à jour le micrologiciel au moins une fois après un nouveau téléchargement,
-     il est plus rapide de simplement passer d'un mode à l'autre sans rafraîchir les paramètres. ''',
+    'tipUpdateMode':''' Pour NyBoard:
+ Si vous avez déjà mis à jour le micrologiciel au moins une fois après un nouveau téléchargement,
+ il est plus rapide de simplement passer d\'un mode à l\'autre sans rafraîchir les paramètres. 
+ Pour BiBoard: 
+ La fonction de ce bouton est identique à celle du bouton "Mettre à jour le micrologiciel".''',
      'Warning': 'Avertissement',
     'Uploading': 'Téléchargement en cours ',
     'is successully uploaded':' a été téléchargé avec succès',
@@ -1391,14 +1622,14 @@ Vous trouverez plus de détails à l'adresse https://docs.petoi.com/upload-firmw
     'msgFileDir': 'Veuillez choisir le dossier de la version !',
     'msgPort': 'Veuillez choisir le port série correct !',
 
-    'msgNoneAvrdude': '''Avrdude n'est pas installé. Veuillez d'abord installer avrdude ! Pour plus de détails, veuillez consulter :
+    'msgNoneAvrdude': '''Avrdude n'est pas installé. Veuillez d\'abord installer avrdude ! Pour plus de détails, veuillez consulter :
     https://docs.petoi.com/desktop-app/firmware-uploader#install-avrdude-in-the-linux-os''',
     'msgNoneEsptool':'Il n\'y a pas d\'estool. Veuillez d\'abord installer esptool!',
 
     'title Version': 'Informations sur la version',
     'msgVersion': 'Version : ' + versionNum + '\n'+
     '''Outil de téléchargement du micrologiciel pour OpenCat
-    Copyright © 2018-2024
+    Copyright © 2018-2025
     Tous droits réservés Petoi LLC
     https://www.petoi.com\n''' + dateStr,
 
@@ -1410,14 +1641,14 @@ Vous trouverez plus de détails à l'adresse https://docs.petoi.com/upload-firmw
     'updating instincts':'Mise à jour des instincts en cours...',
     'instincts updated': 'Instincts mis à jour',
 
-    'calibrate IMU?':'''Calibrer l'IMU ? (O/N)
+    'calibrate IMU?':'''Calibrer l\'IMU ? (O/N)
         Remarque : Placez la carte principale À PLAT sur une table !''',
     'calibrating IMU': 'Calibration de l\'IMU en cours...',
     'IMU calibrated': 'Calibration de l\'IMU terminée !',
     'caliIMUerrorStatus':'Erreur de calibrage IMU!',
 
-     'parameterFinish': '''Paramètres initialisés !
-     La prochaine étape consiste à télécharger la Fonction Principale !''',
+     'parameterFinish': '''Paramètres initialisés ! \n
+Après avoir cliqué sur le bouton "OK", le firmware de la fonction principale sera automatiquement téléchargé.''',
     '9685 Calibrated':'PCA9685 a été calibré avec succès !',
     'msgFinish': 'Téléchargement du micrologiciel terminé !',
     'msgMode': 'Mode invalide, veuillez sélectionner un autre mode !',
@@ -1437,6 +1668,7 @@ Puis, re-mettez à niveau le firmware.\n''',
     'Light':'Lumière',
     'Gesture':'Geste',
     'InfraredDistance':'Distance infrarouge',
+    'Voice_RobotArm':'Voix_Bras robotique',
 
     'Breath':'Respiration',
     'Rotate':'Rotation',
@@ -1490,6 +1722,9 @@ textJP={
     'Task Scheduler':'タスクスケジューラ',
     'Scheduler':'スケジューラ',
     'Firmware Uploader':'ファームウェアアップローダ',
+    'Debugger': 'デバッガー',
+    'tipDebugger':'ロボットのデバッグに便利なツールを提供する。',
+    'tipRstVoice':'このボタンをクリックして音声モジュールをリセットします。',
     'Eye color picker':'目の色選択',
     'Creator Information':'制作者情報',
     'Creator':'制作者',
@@ -1527,6 +1762,9 @@ textJP={
     'Head Pan':'ヘッドパン',
     'Head Tilt':'ヘッドチルト',
     'Tail Pan':'テールパン',
+    'Claw Pan': 'クロー回転',
+    'Claw Lift': 'クロー上昇',
+    'Claw Open': 'クローを開く',
     'N/A':'N/A',
     'Left Front':'左前',
     'Right Front':'右前',
@@ -1546,6 +1784,17 @@ textJP={
     'Random':'ランダム',
     'Send':'送信',
     'Postures':'プリセットポーズ',
+    'balance': 'スタンド',
+    'buttUp': 'お尻を上げる',
+    'dropped': '落とした',
+    'lifted': '持ち上げた',
+    'rest': '休む',
+    'sit': '座る',
+    'str': '伸びる',
+    'zero':'ニュートラルポジション',
+    'flat':'腹ばい',
+    'table':'テーブル',
+
     'Skill Editor':'スキルエディタ',
     'Play':'再生',
     'Pause':'一時停止',
@@ -1582,7 +1831,8 @@ textJP={
 * メインボードがすでにUSBケーブルを介してコンピュータに接続されている場合：\n
 1. コンピュータがUSBデバイスを認識できることを確認します。\n
 詳細は、https://docs.petoi.com/upload-firmwareを参照してください。\n
-2. 以下のボタンをクリックした後、USBケーブルをコンピュータ側から抜き、再び接続します。''',
+2. 以下のボタンをクリックした後、USBケーブルをコンピュータ側から抜き、再び接続します。\n
+プログラムは、正しいシリアルポート名を自動的に識別します。''',
     'Confirm':'確認',
     'Counting down to manual mode: ':'マニュアルモードまでのカウントダウン：',
     'Info':'情報',
@@ -1591,7 +1841,24 @@ textJP={
     '* Port ':'* ポート ',
     ' cannot be opened':' は開けません',
 
+    'Reset voice module':'音声モジュールをリセットする',
+    'Voice indicates':'''メロディー「1-3-5」が聞こえますか？
+はい (« はい » ボタンを押して続行)
+そうでない場合は、「いいえ」ボタンを押して終了してください。BiBoard V0の場合は、
+BiBoard拡張ハットの底面にあるディップスイッチがUART2ではなくVoiceに設定されているか確認してください。
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'はい',
+    'No': 'いいえ',
+    'Reset successfully': 'リセットが成功しました！',
+    'logLocation':'以下のファイルパスにあるログファイル (logfile.log) を確認してください： \n',
+    'checkLogfile':'''\n詳細については、https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file を参照してください \n
+問題を解決できない場合は、ログを support@petoi.com に送信してサポートを受けてください。''',
+
     'Calibrate':'キャリブレーション',
+    'Auto':'自動',
+    'AutoCali failed': '''ロボットグリッパーの関節サーボの自動キャリブレーションに失敗しました！\n
+    マニュアルの指示に従って、手動でキャリブレーションを行ってください：\n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'リセット',
     'Stand Up':'立ち上がる',
     'Walk':'歩く',
@@ -1621,9 +1888,12 @@ textJP={
     'btnFacReset': '工場出荷時設定に戻す',
     'tipFacReset':'ファクトリーリセット後、関節のキャリブレーションを行う必要があります。詳細は次を参照してください：https://docs.petoi.com/joint-calibration',
     'btnUpgrade':'ファームウェアのアップグレード',
-    'tipUpgrade':'パラメータとメイン機能の両方をアップグレードします。ソフトウェアの新しいバージョンをダウンロードした場合は必須です。キャリブレーション値を保持する場合は、\'N\'を選択できます。',
+    'tipUpgrade':'パラメータとメインプログラムのファームウェアをアップグレードします。ソフトウェアの新しいバージョンをダウンロードした場合は必須です。キャリブレーション値を保持する場合は、\'N\'を選択できます。',
     'btnUpdateMode':'モードのみを更新',
-    'tipUpdateMode':'新しいダウンロード後、ファームウェアを少なくとも1回アップグレードした場合、パラメータをリフレッシュせずにモードのみを切り替える方が速くなります。',
+    'tipUpdateMode':''' NyBoardの場合:
+ 新しいダウンロード後、ファームウェアを少なくとも1回アップグレードした場合、パラメータをリフレッシュせずにモードのみを切り替える方が速くなります。
+ BiBoardの場合:
+ このボタンの機能は「ファームウェアのアップグレード」ボタンの機能と同じです。''',
     'Warning':'警告',
     'Uploading':'アップロード中 ',
     'is successully uploaded':'が正常にアップロードされました',
@@ -1637,7 +1907,7 @@ textJP={
 
     'msgVersion':'バージョン：' + versionNum + '\n'+
 '''OpenCat用のファームウェアアップロードツール
-著作権 © 2018-2024
+著作権 © 2018-2025
 全著作権 Petoi LLC
 https://www.petoi.com\n''' + dateStr,
 
@@ -1654,7 +1924,8 @@ https://www.petoi.com\n''' + dateStr,
     'IMU calibrated':'IMUのキャリブレーションが完了しました！',
     'caliIMUerrorStatus':'IMUキャリブレーションエラー!',
 
-    'parameterFinish':'パラメータが初期化されました！次のステップはメイン機能のアップロードです！',
+    'parameterFinish':'''パラメータが初期化されました！\n
+ 「OK」ボタンをクリックすると、メイン機能のファームウェアが自動的にアップロードされます。''',
     '9685 Calibrated':'PCA9685が正常にキャリブレーションされました！',
     'msgFinish':'ファームウェアのアップロードが完了しました！',
     'msgMode':'無効です。別のモードを選択してください！',
@@ -1675,6 +1946,7 @@ https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
     'Light':'光',
     'Gesture':'ジェスチャー',
     'InfraredDistance':'赤外線距離',
+    'Voice_RobotArm':'音声_ロボットアーム',
 
     'Breath':'呼吸',
     'Rotate':'回転',
@@ -1728,6 +2000,9 @@ textIT = {
     'Task Scheduler':'Agenda',
     'Scheduler':'Sequenza',
     'Firmware Uploader':'Caricatore di firmware',
+    'Debugger': 'Debugger',
+    'tipDebugger':'Fornire strumenti convenienti per il debug del robot.',
+    'tipRstVoice':'Clicca su questo pulsante per ripristinare il modulo vocale.',
     'Eye color picker':'Selettore del colore degli occhi',
     'Creator Information':'Informazioni sul creatore',
     'Creator':'Creatore',
@@ -1765,6 +2040,9 @@ textIT = {
     'Head Pan':'Rotazione testa',
     'Head Tilt':'Inclinazione testa',
     'Tail Pan':'Scodinzolo',
+    'Claw Pan': 'Ruotare pinza',
+    'Claw Lift': 'Solleva pinza',
+    'Claw Open': 'Apri pinza',
     'N/A':'N/A',
     'Left Front':'Sinistra Frontale',
     'Right Front':'Destra Frontale',
@@ -1784,6 +2062,17 @@ textIT = {
     'Random':'Random',
     'Send':'Inviare',
     'Postures':'Posizioni Preset',
+    'balance': 'Supporto',
+    'buttUp': 'Sollevare i glutei',
+    'dropped': 'caduto',
+    'lifted': 'sollevato',
+    'rest': 'riposare',
+    'sit': 'sedere',
+    'str': 'stirarsi',
+    'zero':'Posizione neutra',
+    'flat':'piatto a terra',
+    'table':'Tavolo',
+
     'Skill Editor':'Skill Editor',
     'Play':'Start',
     'Pause':'Pausa',
@@ -1814,8 +2103,8 @@ Fare clic sul pulsante in basso. Collegare il cavo USB alla scheda principale, q
 * Se la scheda principale è già collegata al computer tramite un cavo USB:\n
 1. Verificare che il computer sia in grado di riconoscere il dispositivo USB.\n
 Ulteriori dettagli sono disponibili su https://docs.petoi.com/upload-firmware.\n
-2. Dopo aver fatto clic sul pulsante in basso, scollegare il cavo USB dal lato COMPUTER, quindi ricollegarlo.
-''',
+2. Dopo aver fatto clic sul pulsante in basso, scollegare il cavo USB dal lato COMPUTER, quindi ricollegarlo.\n
+Il programma identificherà automaticamente il nome corretto della porta seriale.''',
     'Confirm':'Confermare',
     'Counting down to manual mode: ':'Conto alla rovescia per la modalità manuale: ',
     'Info':'Informazione',
@@ -1823,8 +2112,25 @@ Ulteriori dettagli sono disponibili su https://docs.petoi.com/upload-firmware.\n
     'Please select the port from the list':'Seleziona la porta dall\'elenco',
     '* Port ':'* Porta ',
     ' cannot be opened':' non può essere aperto',
+
+    'Reset voice module':'Ripristina modulo vocale',
+    'Voice indicates':'''Senti la melodia "1-3-5"?
+Se sì, premi il pulsante "Sì" per continuare.
+Se no, premere il pulsante "No" per uscire. Per BiBoard V0, controllare che il selettore 
+DIP nella parte inferiore dell\'estensione BiBoard sia impostato su Voice e non su UART2.
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'Sì',
+    'No': 'No',
+    'Reset successfully': 'Ripristino riuscito!',
+    'logLocation':'Si prega di controllare il file di registro (logfile.log) nel seguente percorso: \n',
+    'checkLogfile':'''\nPer ulteriori dettagli, consultare https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+Se non riesci a risolvere il problema, invia il registro a support@petoi.com per chiedere aiuto.''',
     
     'Calibrate':'Calibrate',
+    'Auto':'Automatico',
+    'AutoCali failed': '''La calibrazione automatica del servo motore dell\'articolazione della pinza robotica è fallita!\n
+    Si prega di seguire le istruzioni del manuale per eseguire una calibrazione manuale: \n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
     'Rest':'Riposo',
     'Stand Up':'In piedi',
     'Walk':'Camminare',
@@ -1856,12 +2162,15 @@ Ulteriori dettagli sono disponibili su https://docs.petoi.com/upload-firmware.\n
  è necessario eseguire la calibrazione del giunto, fare riferimento a: 
  https://docs.petoi.com/joint-calibration ''',
     'btnUpgrade':'Aggiorna il firmware',
-    'tipUpgrade':''' Aggiorna sia i parametri che la funzione principale. 
+    'tipUpgrade':''' Aggiorna i parametri e il firmware del programma principale. 
  * Obbligatorio se hai appena scaricato una nuova versione di questo software. 
  * È possibile selezionare \'N\' per conservare i valori di calibrazione. ''',
     'btnUpdateMode': 'Aggiorna solo la modalità',
-    'tipUpdateMode':''' Se hai aggiornato il firmware almeno una volta dopo un nuovo download, 
- è più veloce cambiare solo modalità senza aggiornare i parametri. ''',
+    'tipUpdateMode':''' Per NyBoard:
+ Se hai aggiornato il firmware almeno una volta dopo un nuovo download, 
+ è più veloce cambiare solo modalità senza aggiornare i parametri. 
+ Per BiBoard: 
+ La funzione di questo pulsante è la stessa del pulsante "Aggiorna il firmware".''',
     'Warning': 'Avvertimento',
     'Uploading': 'Caricamento in corso ',
     'is successully uploaded':' è caricato con successo',
@@ -1875,7 +2184,7 @@ Ulteriori dettagli sono disponibili su https://docs.petoi.com/upload-firmware.\n
     'titleVersion': 'Informazioni sulla versione',
     'msgVersion': 'Versione: ' + versionNum + '\n' +
     '''Strumento di caricamento del firmware per OpenCat
-    Diritto d'autore © 2018-2024
+    Diritto d\'autore © 2018-2025
     Tutti i diritti riservati Petoi LLC
     https://www.petoi.com\n''' + dateStr,
     'reset joints?': 'Reimpostare gli offset dei giunti? (S/N)',
@@ -1892,12 +2201,12 @@ Ulteriori dettagli sono disponibili su https://docs.petoi.com/upload-firmware.\n
     'IMU calibrated': 'Calibrazione IMU completata!',
     'caliIMUerrorStatus':'Errore di calibrazione IMU!',
 
-    'parameterFinish': '''Parametri inizializzati!
-     Il prossimo passo è caricare la funzione principale!''',
+    'parameterFinish': '''Parametri inizializzati! \n
+Dopo aver cliccato sul pulsante "OK", il firmware della funzione principale verrà caricato automaticamente.''',
     '9685 Calibrated':'PCA9685 è stato calibrato con successo!',
     'msgFinish': 'Caricamento del firmware completato!',
     'msgMode': 'Non valido, selezionare un\'altra modalità!',
-    'caliIMUerrorMessage': '''Si prega di spostare l'interruttore I2C sul lato Arduino. Per maggiori dettagli, consultare:\n
+    'caliIMUerrorMessage': '''Si prega di spostare l\'interruttore I2C sul lato Arduino. Per maggiori dettagli, consultare:\n
 https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
 Quindi, aggiornare nuovamente il firmware.\n''',
 
@@ -1913,6 +2222,7 @@ Quindi, aggiornare nuovamente il firmware.\n''',
     'Light':'Luce',
     'Gesture':'Gesto',
     'InfraredDistance':'Distanza infrarossa',
+    'Voice_RobotArm':'Voce_Braccio robotico',
     
     'Breath':'Respiro',
     'Rotate':'Ruotare',
@@ -1936,7 +2246,7 @@ Quindi, aggiornare nuovamente il firmware.\n''',
     'tipMirrorXport':'Rispecchia l\'intera abilità durante l\'esportazione\n* Efficace quando si esporta l\'intera abilità',
     'tipGorB':'Un comportamento esegue l\'interpolazione tra i fotogrammi chiave ed esegue una sola volta\nUn\'andatura scorre su tutti i fotogrammi senza alcuna levigatura',
     'tipLoop':'Imposta i fotogrammi iniziale e finale per il looping\n* Efficace quando si esporta l\'intera abilità',
-    'tipRepeat':'Immettere il numero di loop\n-1 per loop infinito. Solo il pulsante \"reset\" può interrompere il loop!\n* Efficace quando si esporta l\'intera abilità',
+    'tipRepeat':'Immettere il numero di loop\n-1 per loop infinito. Solo il pulsante "reset" può interrompere il loop!\n* Efficace quando si esporta l\'intera abilità',
     'tipSet':'Passa a/salva il fotogramma corrente',
     'tipStep':'Unità: grado/passo\n* Efficace quando si esporta l\'intera abilità',
     'tipDelay':'Unità: millisecondi\nRitardo dopo il fotogramma corrente, prima di entrare nel fotogramma successivo\nSe il trigger è valido, il ritardo inizia dopo il trigger\n* Efficace quando si esporta l\'intera abilità',
@@ -1946,12 +2256,301 @@ Quindi, aggiornare nuovamente il firmware.\n''',
     'tipAdd':'Copia il frame attivo e\ninseriscilo nella riga successiva',
     'tipDel':'Elimina il fotogramma corrente',
     
-    'tipImgWiring':'Prestare attenzione alla posizione e alla direzione dei connettori dei servi\nPremere a lungo il pulsante della batteria per accendere l\'alimentazione\nFare clic su \"Calibra\" per ruotare tutti i servi allo stato di calibrazione\nAttacca le gambe e la testa perpendicolarmente\nUsa il cursore per allineare parallelamente i bordi delle gambe e il righello di riferimento',
+    'tipImgWiring':'Prestare attenzione alla posizione e alla direzione dei connettori dei servi\nPremere a lungo il pulsante della batteria per accendere l\'alimentazione\nFare clic su "Calibra" per ruotare tutti i servi allo stato di calibrazione\nAttacca le gambe e la testa perpendicolarmente\nUsa il cursore per allineare parallelamente i bordi delle gambe e il righello di riferimento',
     'tipImgPosture':'Passa da una postura all\'altra per testare i risultati della calibrazione\nSalva gli offset in tempo\nNon c\'è bisogno di calibrazione in futuro',
     'Boot prompt': 'Richiesta di avvio',
     'poweron':'Il robot deve essere alimentato a una batteria per ruotare le sue articolazioni, \n\nQuesto è fondamentale per il controllo del movimento delle articolazioni! \n\nLa spia LED gialla sulla scheda madre dovrebbe essere accesa, \n\naltrimenti, collega la batteria e premi a lungo il \n\npulsante per 3 secondi per accendere il robot. \n\n',
 }
 
+textRU = {
+    'lan':'Russian',
+    'lanOption':'Русский',
+    'lanMenu':'Язык',
+    'uiTitle':'Приложение Petoi',
+    'calibTitle':'Калибратор',
+    'skillComposerTitle':'Редактор навыков Petoi для OpenCat',
+    'Model':'Модель',
+    'Utility':'Утилиты',
+    'Joint Calibrator':'Войти в калибратор',
+    'Skill Composer':'Редактор навыков',
+    'Task Scheduler':'Планировщик задач',
+    'Scheduler':'Планировщик',
+    'Firmware Uploader':'Обновление Firmware',
+    'Debugger': 'Отладчик',
+    'tipDebugger':'Инструменты отладки робота.',
+
+    'Eye color picker':'Выбор цыета глаз',
+    'Creator Information':'Информация о создателе',
+    'Creator':'Создатель',
+    'Location':'Местоположение',
+    'Nature':'Природа',
+    'Earth':'Земля',
+    'InputCreator':'Введите имя создателя',
+    'InputLocation':'Введите местоположение создателя',
+    'Exit':'Выход',
+    'Help':'Помощь',
+    'About':'О программе',
+    'Repeat':'Повтор',
+    'Loop':'Зацикливание',
+    'Frame':'Кадр',
+    'Step':'Шаг',
+    'Delay':'Задержка',
+    'Trig':'Триггер',
+    'Angle':'Угол',
+    'Note':'Заметка',
+    'Del':'Удалить',
+    'Add':'Добавить',
+    'Set':'Установить',
+    'Save':'Сохранить',
+    'Stop':'Стоп',
+    'Joint Controller':'Контроллер',
+    'Unbind All':'Отвязать все',
+    'Yaw':'Рыскание',
+    'Pitch':'Подача',
+    '-Pitch':'-Подача',
+    'Roll':'Вращение',
+    '-Roll':'-Вращение',
+    'Spinal':'Позвоночный',
+    'Height':'Высота',
+    'Sideway':'Боковой',
+    'Head Pan':'Слот головы',
+    'Head Tilt':'Наклон головы',
+    'Tail Pan':'Слот хвоста',
+    'Claw Pan': 'Слот когтя',
+    'Claw Lift': 'Подъем когтя',
+    'Claw Open': 'Раскрытие когтя',
+    'N/A':'Н/Д',
+    'Left Front':'Лево Перед',
+    'Right Front':'Право Перед',
+    'Right Back':'Право Зад',
+    'Left Back':'Лево Зад',
+    'Shoulder':'Плечо',
+    'Arm':'Рука',
+    'Knee':'Колено',
+    'State Dials':'Установка циферблата',
+    'Connect':'Подключить',
+    'Connected':'Подключено',
+    'Listening':'Слушать',
+    'All':'Все',
+    'None':'Никто',
+    'Servo':'Серво',
+    'Gyro':'Гиро',
+    'Random':'Случайно',
+    'Send':'Отправить',
+    'Postures':'Предустановка позиций',
+    'balance': 'стоять',
+    'buttUp': 'бодать',
+    'dropped': 'упал',
+    'lifted': 'поднял',
+    'rest': 'отдыхать',
+    'sit': 'сидеть',
+    'str': 'вытягивать',
+    'zero':'ноль',
+    'flat':'плоский',
+    'table':'стол',
+
+    'Skill Editor':'Редактор навыков',
+    'Play':'Играть',
+    'Pause':'Пауза',
+    'Import':'Импорт',
+    'Restart':'Рестарт',
+    'Export':'Экспорт',
+    'Undo':'Вернуть',
+    'Redo':'Повторить',
+    'Open File':'Открыть файл',
+    'Cancel':'Отмена',
+    'OK':'OK',
+    'Refresh':'Обновить',
+    'Multiple':'Много',
+    'Skill List':'Список навыков',
+    'Type of skill':'Тип навыка',
+    'Name of skill':'Название навыка',
+    'exampleFormat':'Импорт из файла, или копирование и вставка данных навыка из instinct.h в нужном формате.\n* Сохранить фигурные скобки!',
+    'Quit':'Выйти',
+    'Do you want to quit?':'Хотите выйти?',
+    'mirror':'     Отразить Всё',
+    '>|<':'>|<',
+    'Posture': '  Поза',
+    'Gait':'  Походка',
+    'Behavior':'  Поведение',
+    'Clear':'Очистить',
+    'max':'макс',
+
+    'Manual mode':'Ручной режим',
+    'Replug mode':'Переподключение',
+    # 'Replug prompt':'''Внимание: Поключение потеряно!\n\n
+    'Replug prompt':'''Внимание: \n\n
+* Если плата контролера не подключена к компьютеру:\n
+Нажмите на кнопку ниже. Подключите USB кабель к плате контролера, а затем другой конец к компьютеру. \n\n
+* Если плата контролера уже подключена к компьютеру через USB кабель:\n
+1. Убедитесь, что компьютер распознает USB-устройство..\n
+Больше деталей содержится на https://docs.petoi.com/upload-firmware\n
+2. После нажатия кнопки ниже, переподключите USB кабель на стороне компьютера.\n
+Программа автоматически определит правильное имя последовательного порта.''',
+    'Confirm':'Подтвердить',
+    'Counting down to manual mode: ':'Вернуться в ручной режим: ',
+    'Info':'Инфо',
+    'New port prompt':'Обнаружить новое USB-устройство: ',
+    'Please select the port from the list':'Укажите порт из списка',
+    '* Port ':'* Порт ',
+    ' cannot be opened':' не может открыться',
+
+    'Reset voice module':'Сбросить голосовой модуль',
+    'tipRstVoice':'Нажмите кнопку для сброса госового модуля.',
+    'BiBoard Config':'Конфигурация BiBoard',
+    'tipbiboardConfig':'Нажмите эту кнопку для конфигурирования BiBoard.',
+
+    'Voice indicates':'''Вы слишите мелодию "1-3-5"?\n
+Если да, нажмите "Да" для продолжения; 
+Если нет, нажмите "Нет" для выхода, для BiBoard V0, проверьте дисковый переключатель 
+на нижней стороне голосового расширителя BiBoard (не UART2).
+https://docs.petoi.com/extensible-modules/voice-command-module#how-to-debug-if-the-voice-command-doesnt-work''',
+    'Yes': 'Да',
+    'No': 'Нет',
+    'Reset successfully': 'Успешный сброс!',
+    'logLocation':'Проверьте log файл (logfile.log) по следующему пути: \n',
+    'checkLogfile':'''\nДополнительная информация по адресу https://docs.petoi.com/desktop-app/firmware-uploader#check-the-log-file \n
+Если проблема не решена, отправьте лог на support@petoi.com for help.''',
+
+    'Calibrate':'Калибровка',
+    'Auto':'Авто',
+    'AutoCali failed': '''Автоматическая калибровка сервопривода сустава лапы не удалась!\n
+    Следуйте инструкциям в Центре документации Petoi для выполнения ручной калибровки:\n
+    https://docs.petoi.com/extensible-modules/robot-arm#fine-calibration''',
+    'Rest':'Отдых',
+    'Stand Up':'Встать',
+    'Walk':'Ходить',
+    'Abort':'Прервать',
+    'Do you want to save the offsets?':'Хотите сохранить смещения?',
+    'uploaderTitle': 'Загрузчик прошивки',
+    'labTrans': 'Сменить язык',
+    'labChi': 'Китайский',
+    'labEng': 'Английский',
+    'labHelp': 'Помощь',
+    'labAbout': 'О программе',
+    'labExit': 'Выход',
+    'labFileDir': 'Выберите папку релиза',
+    'btnFileDir': '...',
+    'titleFileDir': 'Выберите папку релиза',
+    'labPort': 'Последовательный порт',
+    'labSoftwareVersion': 'Версия программы',
+    'labBoardVersion': 'Версия платы',
+    'labProduct': 'Продукт',
+    'labMode': 'Режим',
+    'rbnWalk': 'Ходить',
+    'rbnUltrasonic': 'Ультразвуковой',
+    'rbnCamera': 'Камера',
+    'Parameters':'Параметры',
+    'Main function':'Основная функция',
+    'Time consuming': 'это займет около 30 секунд',
+    'btnFacReset':'Сброс до заводских настроек',
+    'tipFacReset':''' После сброса до заводских настроек, необходимо выполнить калибровку сервоприводов суставов, подробнее: 
+ https://docs.petoi.com/joint-calibration ''',
+    'btnUpgrade':'Обновить прошивку',
+    'tipUpgrade':''' Обновите как параметры, так и основную функцию. 
+ * Обязательно, если только что загрузили новую версию этого программного обеспечения.. 
+ * Можно выбрать \'N\' для сохранения значений калибровки. ''',
+    'btnUpdateMode': 'Обновить только режим',
+    'tipUpdateMode':''' Для NyBoard:
+ Если прошивка обновлялалсь хотябы раз после новой загрузки, 
+ это быстрее только для переключения режимов без обновления параметров. 
+ Для BiBoard:
+ Функция этой кнопки аналогична функции кнопки «Обновить прошивку».''',
+    'Warning': 'Предупреждение',
+    'Uploading': 'Загрузка ',
+    'is successully uploaded':' успешно загружен',
+    'failed to upload':' сбой загрузки',
+    'Need to manually select the model type (Nybble/Bittle)':'Нужно вручную выбрать модель (Nybble/Bittle)',
+    'msgFileDir': 'Выбирете папку релиза',
+    'msgPort': 'Выбирете правильный последовательный порт!',
+
+    'msgNoneAvrdude': '''Нет avrdude. Сначала установите avrdude! Для деталей, изучите :
+    https://docs.petoi.com/desktop-app/firmware-uploader#install-avrdude-in-the-linux-os''',
+    'msgNoneEsptool':'Нет esptool. Сначала установите esptool!',
+
+    'titleVersion': 'Информация о версии',
+
+    'msgVersion': 'Версия: ' + versionNum + '\n'+
+    '''Инструмент загрузки прошивки для OpenCat
+    Copyright © 2018-2024
+    All rights reserved Petoi LLC
+    https://www.petoi.com\n''' + dateStr,
+
+    'reset joints?': 'Сброс смещений суставов? (Д/Н)',
+    'reseting joints': 'Сброс смещений суставов...',
+    'joints reset': 'Сброс смещений суставов закончен!',
+    
+    'update instincts?':'Обновить Инстинкт? (Д/Н)',
+    'updating instincts':'Обновление Инстинкта......',
+    'instincts updated': 'Инстинкт обновлен',
+    
+    'calibrate IMU?':'''Калибровка IMU? (Д/Н)
+    Примечание: Положите материнскую плату ГОРИЗОНТАЛЬНО!''',
+    'calibrating IMU': 'Калибровка IMU...',
+    'IMU calibrated': 'Калибровка IMU завершена!',
+    'caliIMUerrorStatus':'Ошибка калибровки IMU!',
+
+    'parameterFinish': '''Параметры инициализированы! \n
+После нажатия кнопки «ОК» будет автоматически загружена основная функциональная прошивка.''',
+
+    '9685 Calibrated':'PCA9685 успешно откалиброван!',
+    'msgFinish': 'Загрузка прошивки завершена!',
+    'msgMode': 'Неверно, выберите другой режим!',
+    'caliIMUerrorMessage': '''Пожалуйста, переключите I2C на сторону Arduino! Для получения информации см:\n
+https://docs.petoi.com/desktop-app/firmware-uploader#nyboard-version \n
+Затем повторно обновите прошивку.\n''',
+
+    'Standard':'Стандартный',
+    'RandomMind':'СлучайныйРазум',
+    'Ultrasonic':'Ультразвук',
+    'Voice':'Голосовой',
+    'Camera':'Камера',
+    'Mind+':'Разум+',
+    'RandomMind_Ultrasonic':'Случайный Разум_Ультразвук',
+    'PIR':'ПассИКдатчик движ PIR',
+    'Touch':'Прикосновения',
+    'Light':'Света',
+    'Gesture':'Жестов',
+    'InfraredDistance':'ИК_дистанции',
+    'Voice_RobotArm':'Голосовой_РоботРука',
+    
+    'Breath':'Дыхание',
+    'Rotate':'Поворот',
+    'Flash':'Вспышка',
+    'Meow':'Мяу',
+ 
+    'labEdit':'Правка',
+    'labTheme':'Тема',
+    'tipConnect':'Непрерывное обновление списка активных последовательтных\nпортов пока они \не будут отключены',
+    'tipPortMenu':'Управление одним или всеми устройствами',
+    'tipServo':'Включение/выключение сервоприводов',
+    'tipGyro':'Включение/выключение гироскопа',
+    'tipRandom':'Вкдючение/выключение случайного поведения\n* в заданных режимах',
+    'tipBinder':'Привязка к другим суставам',
+    'tipRevBinder':'Реверсивная привязка к другим суставам',
+    'tipPlay':'Пройдите через планировщик из активного кадра\nМожете остановиться во время игры.',
+    'tipImport':'Импорт навыков из файлов или текстов',
+    'tipRestart':'Очистить все кадры в планировщике!',
+    'tipExport':'Навык будет немедленно отправлен и сохранен\nв постоянной памяти робота\nИспользуйте порядковый знак \'T\' для вызова последнего отправленного навыка',
+    'tipMirror':'Отразить текущий кадр',
+    'tipMirrorXport':'Зеркалирование всего навыка при экспорте\n* Эффективно при экспорте всего навыка',
+    'tipGorB':'Поведение интерполируется между ключевыми кадрами и выполняется только один раз.\nПрохождение зацикливается по всем кадрам без сглаживания',
+    'tipLoop':'Установите начальный и конечный кадры для зацикливания\n* Эффективно при экспорте всего навыка',
+    'tipRepeat':'Введите количество зацикливаний\n-1 для бесконечного цикла. Только кнопка «сброс» может прервать этот цикл!\n* Эффективно при экспорте всего навыка',
+    'tipSet':'Перейти к текущему кадру / сохранить его',
+    'tipStep':'Единица: градус/шаг\n* Эффективно при экспорте всего навыка',
+    'tipDelay':'Единица: милисекунда\nЗадержка после текущего кадра, перед следующим кадром\nЕсли задействован триггер запуска, задержка начинается после триггера\n* Эффективно при экспорте всего навыка',
+    'tipTrig':'Запуск следующего кадра только когда тело повернется\nна угол срабатывания в определенном направлении\n* Эффективно при экспорте всего навыка',
+    'tipTrigAngle':'Критический угол для триггера запуска\n* Эффективно при экспорте всего навыка',
+    'tipNote':'Задайте кадру легко запоминающееся название',
+    'tipAdd':'Скопировать активный кадр и\nвставить его в следующую строку',
+    'tipDel':'Удалить текущий кадр',
+    
+    'tipImgWiring':'Обратите внимание на расположение и направление серворазъемов\nДлинное нажатие на кнопку батареи вкючает питание\nНажмите «Калибровать», чтобы повернуть все сервоприводы в состояние калибровки\nПрикрепите ноги и голову перпендикулярно\nИспользуйте ползунок, чтобы выровнять концы ног по контрольному шаблону параллельно',
+    'tipImgPosture':'Переключайтесь между позами, чтобы проверить результаты калибровки\nСохраняйте смещения вовремя\nНе требует калибровки в будущем',
+    'Boot prompt': 'Загрузочная подсказка',
+    'poweron':'Робот должен питаться от батареи для вращения суставов, \n\nЭто ЖИЗНЕННО необходимо для контроля движения суставов!\n\nЖелтый светодиод на материнской плате должен загореться, \n\иначе подключите аккумулятор и нажмите и удерживайте эту \n\кнопку 3 секунды для вкючения робота.\n\n',
+}
 languageList = {
     'English':textEN,
     'Simplified Chinese':textCN,
@@ -1961,5 +2560,6 @@ languageList = {
     'French':textFR,
     'Japanese':textJP,
     'Italian':textIT,
+    'Russian':textRU,
     #to be added
 }

@@ -9,19 +9,17 @@
 from FirmwareUploader import *
 from SkillComposer import *
 from Calibrator import *
+from Debugger import *
 from tkinter import PhotoImage
 
 language = languageList['English']
-apps = ['Firmware Uploader', 'Joint Calibrator', 'Skill Composer']  # ,'Task Scheduler']
-
+apps = ['Firmware Uploader', 'Joint Calibrator', 'Skill Composer', 'Debugger']  # ,'Task Scheduler']
 
 def txt(key):
     return language.get(key, textEN[key])
 
-
 class UI:
     def __init__(self):
-        global model
         global language
         try:
             with open(defaultConfPath, "r", encoding="utf-8") as f:
@@ -31,7 +29,7 @@ class UI:
             num = len(lines)
             logger.debug(f"len(lines): {num}")
             self.defaultLan = lines[0]
-            model = lines[1]
+            self.configName = lines[1]
             self.defaultPath = lines[2]
             self.defaultSwVer = lines[3]
             if lines[4] == "BiBoard_V0":
@@ -42,22 +40,22 @@ class UI:
             if len(lines) >= 8:
                 self.defaultCreator = lines[6]
                 self.defaultLocation = lines[7]
-                self.configuration = [self.defaultLan, model, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
+                self.configuration = [self.defaultLan, self.configName, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
                                       self.defaultMode, self.defaultCreator, self.defaultLocation]
             else:
-                self.configuration = [self.defaultLan, model, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
+                self.configuration = [self.defaultLan, self.configName, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
                                       self.defaultMode]
 
 
         except Exception as e:
             print('Create configuration file')
             self.defaultLan = 'English'
-            model = 'Bittle'
+            self.configName = 'Bittle'
             self.defaultPath = releasePath[:-1]
             self.defaultSwVer = '2.0'
             self.defaultBdVer = NyBoard_version
             self.defaultMode = 'Standard'
-            self.configuration = [self.defaultLan, model, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
+            self.configuration = [self.defaultLan, self.configName, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
                                   self.defaultMode]
             # raise e
 
@@ -69,7 +67,7 @@ class UI:
         self.OSname = self.window.call('tk', 'windowingsystem')
         if self.OSname == 'win32':
             self.window.iconbitmap(resourcePath + 'Petoi.ico')
-            self.window.geometry('398x270+800+400')
+            self.window.geometry('398x360+800+400')
         elif self.OSname == 'aqua':
             self.window.geometry('+800+400')
             self.backgroundColor = 'gray'
@@ -83,11 +81,14 @@ class UI:
         self.window.title(txt('uiTitle'))
         self.createMenu()
         bw = 23
-        self.modelLabel = Label(self.window, text=model, font=self.myFont)
+        self.modelLabel = Label(self.window, text=displayName(self.configName), font=self.myFont)
         self.modelLabel.grid(row=0, column=0, pady=10)
         for i in range(len(apps)):
-            Button(self.window, text=txt(apps[i]), font=self.myFont, fg='blue', width=bw, relief='raised',
-                   command=lambda app=apps[i]: self.utility(app)).grid(row=1 + i, column=0, padx=10, pady=(0, 10))
+            self.moduleButton = Button(self.window, text=txt(apps[i]), font=self.myFont, fg='blue', width=bw, relief='raised',
+                   command=lambda app=apps[i]: self.utility(app))
+            self.moduleButton.grid(row=1 + i, column=0, padx=10, pady=(0, 10))
+            if apps[i] == 'Debugger':
+                tip(self.moduleButton, txt('tipDebugger'))
 
         self.ready = True
         self.window.protocol('WM_DELETE_WINDOW', self.on_closing)
@@ -100,8 +101,8 @@ class UI:
         self.menubar = Menu(self.window, background='#ff8000', foreground='black', activebackground='white',
                             activeforeground='black')
         file = Menu(self.menubar, tearoff=0, background='#ffcc99', foreground='black')
-        for key in NaJoints:
-            file.add_command(label=key, command=lambda model=key: self.changeModel(model))
+        for m in modelOptions:
+            file.add_command(label=m, command=lambda model=m: self.changeModel(model))
         self.menubar.add_cascade(label=txt('Model'), menu=file)
 
         lan = Menu(self.menubar, tearoff=0)
@@ -116,12 +117,13 @@ class UI:
         self.window.config(menu=self.menubar)
 
     def changeModel(self, modelName):
-        global model
-        model = copy.deepcopy(modelName)
-        self.modelLabel.configure(text=model)
-        print(model)
-        if model == "Bittle X":
+        self.configName = copy.deepcopy(modelName)
+        self.modelLabel.configure(text=self.configName)
+        print(self.configName)
+        if self.configName == "Bittle X":
             self.defaultBdVer = "BiBoard_V0_2"
+        elif self.configName == "Bittle R":
+            self.defaultBdVer = "BiBoard_V1_0"
 
     def changeLan(self, l):
         global language
@@ -134,13 +136,16 @@ class UI:
             self.window.title(txt('uiTitle'))
             for i in range(len(apps)):
                 self.window.winfo_children()[1 + i].config(text=txt(apps[i]))
+                if apps[i] == 'Debugger':
+                    tip(self.window.winfo_children()[1 + i], txt('tipDebugger'))
+
 
     def saveConfigToFile(self, filename):
         if len(self.configuration) == 6:
-            self.configuration = [self.defaultLan, model, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
+            self.configuration = [self.defaultLan, self.configName, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
                          self.defaultMode]
         else:
-            self.configuration = [self.defaultLan, model, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
+            self.configuration = [self.defaultLan, self.configName, self.defaultPath, self.defaultSwVer, self.defaultBdVer,
                                   self.defaultMode, self.defaultCreator, self.defaultLocation]
         config.strLan = self.defaultLan
         logger.debug(f"save the language as: {config.strLan}.")
@@ -150,18 +155,22 @@ class UI:
         f.close()
 
     def utility(self, app):
+        global language
+
         self.saveConfigToFile(defaultConfPath)
         logger.info(f"{self.configuration}")
         self.window.destroy()
 
         if app == 'Firmware Uploader':
-            Uploader(model, language)
+            Uploader(self.configName, language)
         elif app == 'Joint Calibrator':
             self.showBootPrompt("cali")
-            Calibrator(model, language)
+            Calibrator(self.configName, language)
         elif app == 'Skill Composer':
             self.showBootPrompt("skil")
-            SkillComposer(model, language)
+            SkillComposer(self.configName, language)
+        elif app == 'Debugger':
+            Debugger(self.configName, language)
         elif app == 'Task Scheduler':
             print('schedule')
 
@@ -187,6 +196,7 @@ class UI:
     def showAbout(self):
         messagebox.showinfo('Petoi Desktop App',
                             u'Petoi Desktop App\nOpen Source on GitHub\nCopyright © Petoi LLC\nwww.petoi.com')
+        self.window.focus_force()
 
     def on_closing(self):
         if messagebox.askokcancel(txt('Quit'), txt('Do you want to quit?')):
