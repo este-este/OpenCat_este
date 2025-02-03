@@ -1,4 +1,4 @@
-#define SOFTWARE_VERSION "N_240410"  //NyBoard + YYMMDD
+#define SOFTWARE_VERSION "N_240517"  //NyBoard + YYMMDD
 //board configuration
 // -- comment out these blocks to save program space for your own codes --
 #define BUZZER 5
@@ -295,7 +295,7 @@ float currentAdjust[DOF] = {};
 #define IDLE_TIME 3000
 long idleTimer = 0;
 int randomInterval = 2000;
-#define CHECK_BATTERY_PERIOD 5000  //every 10 seconds. 60 mins -> 3600 seconds
+#define CHECK_BATTERY_PERIOD 10000  //every 10 seconds. 60 mins -> 3600 seconds
 int uptime = -1;
 int frame = 0;
 byte tStep = 1;
@@ -332,7 +332,7 @@ bool fineAdjust = true;
 bool gyroBalanceQ = true;
 bool printGyro = false;
 bool walkingQ = false;
-bool serialDominateQ = false;
+// bool serialDominateQ = false;
 bool manualHeadQ = false;
 bool nonHeadJointQ = false;
 bool hardServoQ = true;
@@ -413,7 +413,6 @@ float protectiveShift;  //reduce the wearing of the potentiometer
 #elif defined DOUBLE_INFRARED_DISTANCE
 #include "doubleInfraredDistance.h"
 #elif defined GROVE_SERIAL_PASS_THROUGH
-#define ULTRASONIC
 #include "ultrasonic.h"
 #elif defined OTHER_MODULES
 #elif defined ALL_RANDOM
@@ -434,7 +433,6 @@ float protectiveShift;  //reduce the wearing of the potentiometer
 
 #ifdef GROVE_SERIAL_PASS_THROUGH
 #undef IR_PIN
-#undef BUZZER
 #endif
 
 #include "skill.h"
@@ -491,9 +489,20 @@ void initRobot() {
 #ifdef GESTURE
   gestureSetup();
 #endif
+
+#if defined DOUBLE_LIGHT || defined DOUBLE_TOUCH || defined DOUBLE_INFRARED_DISTANCE || defined ULTRASONIC
+#ifndef GROVE_SERIAL_PASS_THROUGH
+  skill.loadFrame("sit");  //required by double light
+  delay(500);              //use your palm to cover the two light sensors for calibration
+#endif
+#ifdef DOUBLE_INFRARED_DISTANCE
+  doubleInfraredDistanceSetup();
+#endif
 #ifdef DOUBLE_LIGHT
   doubleLightSetup();
 #endif
+#endif
+
 #ifdef GYRO_PIN
   for (byte r = 0; r < 50; r++) {  //ypr is slow when starting up. leave enough time between IMU initialization and this reading
     read_IMU();
@@ -510,14 +519,7 @@ void initRobot() {
   allCalibratedPWM(currentAng);  //soft boot for servos
   delay(500);
   lastCmd[0] = '\0';
-#if defined DOUBLE_LIGHT || defined DOUBLE_TOUCH || defined DOUBLE_INFRARED_DISTANCE
-#ifdef DOUBLE_INFRARED_DISTANCE
-  doubleInfraredDistanceSetup();
-#endif
-  skill.loadFrame("sit");  //required by double light
-  delay(500);              //use your palm to cover the two light sensors for calibration
-#endif
-  //----------------------------------
+//----------------------------------
 #else  // ** save parameters to device's static memory
   configureEEPROM();
   servoSetup();  //servo needs to be after configureEEPROM and before imuSetup
